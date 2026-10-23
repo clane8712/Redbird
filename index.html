@@ -296,5 +296,82 @@ window.RB_RUNTIME="/**\n * @license React\n * react.production.min.js\n *\n * Co
 })();
 </script>
 
+<!-- 21+ age gate: birthday check before anyone sees the site. Remembered on this device for 30 days. -->
+<style>
+#rb-age { position: fixed; inset: 0; z-index: 9999; background: rgba(17,17,17,0.94); display: flex; align-items: center; justify-content: center; padding: 16px; font-family: 'DM Sans', sans-serif; }
+#rb-age[hidden] { display: none; }
+#rb-age .card { width: 100%; max-width: 440px; background: #FFFFFF; color: #111111; border-radius: 16px; border-top: 6px solid #C8102E; padding: 32px 28px 26px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 24px 64px rgba(0,0,0,0.4); }
+#rb-age .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; }
+#rb-age .brand img { height: 32px; width: auto; }
+#rb-age h2 { margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; letter-spacing: 1.5px; line-height: 0.95; }
+#rb-age p { margin: 0; font-size: 15px; line-height: 1.55; color: #555555; }
+#rb-age .eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: #C8102E; }
+#rb-age .fields { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 10px; }
+#rb-age label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 600; color: #555555; }
+#rb-age input { height: 52px; border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; background: #F7F7F9; font: inherit; font-size: 20px; font-weight: 600; text-align: center; color: #111111; width: 100%; box-sizing: border-box; }
+#rb-age input:focus { outline: 2px solid #C8102E; outline-offset: 1px; background: #FFFFFF; }
+#rb-age button { height: 52px; border: 0; border-radius: 8px; background: #C8102E; color: #FFFFFF; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+#rb-age button:hover { background: #9E0B22; }
+#rb-age .err { min-height: 20px; font-size: 14px; font-weight: 600; color: #C8102E; }
+#rb-age .fine { font-size: 12px; line-height: 1.5; color: #767676; }
+#rb-age .denied { display: none; }
+#rb-age.no .ask { display: none; }
+#rb-age.no .denied { display: flex; flex-direction: column; gap: 12px; }
+</style>
+<div id="rb-age" role="dialog" aria-modal="true" aria-labelledby="rb-age-title" hidden>
+  <div class="card">
+    <div class="brand"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgOTUzIDkzNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjI7Ij4KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTc2MTc2LDApIj4KICAgICAgICA8ZyBpZD0iUGFnZS00IiB0cmFuc2Zvcm09Im1hdHJpeCg0LjE2NjY3LDAsMCw0LjE2NjY3LDc2MTc2LjYsMCkiPgogICAgICAgICAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjI4LjQ2IiBoZWlnaHQ9IjIyNC4wNzYiIHN0eWxlPSJmaWxsOm5vbmU7Ij48L3JlY3Q+CiAgICAgICAgICAgIDxnIGlkPSJCYWNrZ3JvdW5kIj4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8ZyBpZD0iTG9nby1BcnQiPgogICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwxMDUuOTUsMTIxLjk3NikiPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0wLC0xOS44MTdDMC4wMDEsLTE5LjgxNyAwLjAwMiwtMTkuODE3IDAuMDAyLC0xOS44MThDMC4wMDMsLTE5LjgxOSAwLjAwNCwtMTkuODIgMC4wMDUsLTE5LjgyQzAuODgxLC0yMC41OTMgMS43OSwtMjEuMzY4IDIuNzIzLC0yMi4xMTZDMy42NTYsLTIyLjg2NCA0LjYxMywtMjMuNTg3IDUuNTg3LC0yNC4yNTRDNy44NDgsLTI1LjcxNSA5Ljk1MywtMjYuODczIDExLjkzMiwtMjcuNzc1QzEzLjkxMSwtMjguNjc2IDE1Ljc2MywtMjkuMzIxIDE3LjUxNiwtMjkuNzU2QzIyLjIsLTMwLjkxNSAyNi4xNzgsLTMwLjU3NyAyOS45NzYsLTI5LjYzN0MzMy43NzQsLTI4LjY5NiAzNy4zOTQsLTI3LjE1MyA0MS4zNjMsLTI1LjlDNDQuNTM0LC0yNC44OTggNDcuOTI4LC0yNC4wOCA1MS44MTQsLTIzLjkwM0M1NS42OTksLTIzLjcyNiA2MC4wNzYsLTI0LjE5MSA2NS4yMTQsLTI1Ljc1QzY1LjIxNywtMjUuNzUxIDY1LjIyLC0yNS43NTEgNjUuMjIyLC0yNS43NTJDNjcuMzk4LC0yNi4yMSA2OS41OTUsLTI2LjY2MiA3MS43OSwtMjdDNzMuOTM1LC0yNy4zMyA3Ni4wNzcsLTI3LjU1IDc4LjE5NCwtMjcuNTYxQzc4LjI2NiwtMjcuNTYxIDc4LjMxMywtMjcuNjMzIDc4LjI4NSwtMjcuNjk5QzcwLjA2OSwtNDYuNjE0IDU4LjQwOCwtNjQuMzE2IDQ0LjM4NSwtODAuMjExQzMwLjM5NywtOTYuMDY2IDE0LjA1OSwtMTEwLjEyNCAtMy41NTksLTEyMS43OTlDLTMuNjQsLTEyMS44NTMgLTMuNzQzLC0xMjEuNzcgLTMuNzA3LC0xMjEuNjc5Qy0xLjU0NSwtMTE2LjI0NCAwLjQ2OSwtMTEwLjczNSAyLjMzMSwtMTA1LjE1N0M0LjIyNywtOTkuNDc4IDUuOTY0LC05My43MjYgNy41MzksLTg3LjkwN0M2LjYyOCwtODkuMjA0IDUuNzA4LC05MC40OTQgNC43NzgsLTkxLjc3N0MzLjg0OSwtOTMuMDYgMi45MSwtOTQuMzM2IDEuOTYyLC05NS42MDRDMC41ODksLTk3LjQ0MiAtMS40MiwtMTAwLjExNiAtMy4yNjksLTEwMi41MDVDLTQuOTkzLC0xMDQuNzMzIC02LjU3OCwtMTA2LjcxMiAtNy4zNzYsLTEwNy41MjhDLTcuNDM3LC0xMDcuNTkgLTcuNTM5LC0xMDcuNTQzIC03LjU0MSwtMTA3LjQ1NkMtOC4wNDgsLTg0LjQwMyAtMjIuMzEzLC02MS4zMDkgLTQxLjU5NSwtNDIuMTkyQy02MC44MjMsLTIzLjEyOSAtODUuMDQsLTguMDIxIC0xMDUuNTc1LC0wLjg1NEMtMTA1LjY3MywtMC44MTkgLTEwNS42NTYsLTAuNjgzIC0xMDUuNTUzLC0wLjY2OUMtODIuNzI0LDIuNTE3IC02MC41NTgsMTAuMzYgLTQwLjc5NiwyMi4wNDJDLTIwLjkxOSwzMy43OTMgLTMuNDc2LDQ5LjQyNyA5Ljc2NCw2OC4xMTVDMTMuNDU4LDczLjMyOCAxNi44MjMsNzguNzc5IDE5LjgyNCw4NC40NUMyMi44LDkwLjA3MyAyNS40MTYsOTUuOTEyIDI3LjYzNSwxMDEuOTQ4QzI3LjY2MSwxMDIuMDE4IDI3Ljc1MSwxMDIuMDM2IDI3LjgwMiwxMDEuOTgyQzMxLjM1MSw5OC4xODggMzQuNjk5LDk0LjIzOCAzNy44MzMsOTAuMTQyQzQwLjk5NCw4Ni4wMTIgNDMuOTM4LDgxLjczMiA0Ni42NTQsNzcuMzExQzQ2LjY2NSw3Ny4yOTMgNDYuNjcsNzcuMjcyIDQ2LjY2OSw3Ny4yNUM0NS44MzIsNjMuNDY5IDQyLjgzNSw0OS45MzggMzguMDExLDM3LjA4MUMzMy4xODQsMjQuMjE0IDI2LjUyNSwxMi4wMjIgMTguMzcsMC45MjlDMTUuNjI5LC0yLjc5OCAxMi43MTksLTYuNDAxIDkuNjU0LC05Ljg2NEM2LjU4OCwtMTMuMzI3IDMuMzY2LC0xNi42NSAwLC0xOS44MTciIHN0eWxlPSJmaWxsOnJnYigyMTIsMCwyOCk7ZmlsbC1ydWxlOm5vbnplcm87Ij48L3BhdGg+CiAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDE4Ny43ODksMTQ1LjQ1OSkiPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0wLC00Mi42NDZDLTAuMDI3LC00Mi42NTggLTAuMDYsLTQyLjY1OCAtMC4wODYsLTQyLjY0NUMtMi42NiwtNDEuNDE1IC01LjEzLC00MC4wMzEgLTcuNDgzLC0zOC41MDdDLTkuODQ5LC0zNi45NzUgLTEyLjA5NiwtMzUuMzAxIC0xNC4yMDksLTMzLjVDLTE0LjIzLC0zMy40ODEgLTE0LjI1LC0zMy40NjMgLTE0LjI3LC0zMy40NDZDLTE0LjI5MSwtMzMuNDI4IC0xNC4zMTEsLTMzLjQxMSAtMTQuMzMxLC0zMy4zOTRDLTE3LjM0NSwtMzAuODEzIC0yMC4wODYsLTI3Ljk3IC0yMi41MTEsLTI0LjkwNkMtMjQuOTM2LC0yMS44NDMgLTI3LjA0MywtMTguNTU4IC0yOC43OTEsLTE1LjA5Qy0yOS45NTUsLTEyLjc4MyAtMzAuOTU5LC0xMC4zOTUgLTMxLjc5MiwtNy45MzhDLTMyLjYxMSwtNS41MTcgLTMzLjI2NCwtMy4wMjkgLTMzLjczNiwtMC40ODdDLTMzLjc0OCwtMC40MjcgLTMzLjcwMywtMC4zNyAtMzMuNjQzLC0wLjM2NkMtMzIuMjMyLC0wLjI3NiAtMzAuODE4LC0wLjIwMyAtMjkuMzk4LC0wLjE0NUMtMjcuOTQxLC0wLjA4NSAtMjYuNDc5LC0wLjA0MyAtMjUuMDEzLC0wLjAxOUMtMjQuNTg2LC0wLjAxIC0yNC4xNTksLTAuMDA0IC0yMy43MzEsMEMtMjMuMzAzLDAuMDA1IC0yMi44NzUsMC4wMDggLTIyLjQ0NiwwLjAwOUwtMjIuMDg2LDAuMDA5Qy0yMi4wMjUsMC4wMTEgLTIxLjk2NSwwLjAxMSAtMjEuOTA1LDAuMDEyTC0yMS43MjMsMC4wMTJDLTIwLjY3NSwwLjAxMiAtMTkuNjMsMC4wMDMgLTE4LjU4OCwtMC4wMTVDLTE3LjU0NiwtMC4wMzIgLTE2LjUwNywtMC4wNTkgLTE1LjQ3LC0wLjA5M0MtMTUuNDUyLC0wLjA5MyAtMTUuNDM1LC0wLjA5NCAtMTUuNDE4LC0wLjA5NUMtMTUuNDAxLC0wLjA5NSAtMTUuMzg0LC0wLjA5NiAtMTUuMzY4LC0wLjA5NkMtNS41MDIsLTAuNDI3IDQuMTQ4LC0xLjUyOCAxMy41MTEsLTMuMzM1QzIyLjgyOCwtNS4xMzMgMzEuODYxLC03LjYyOSA0MC41NDEsLTEwLjc2MUM0MC42MDUsLTEwLjc4NCA0MC42MjksLTEwLjg2NSA0MC41ODcsLTEwLjkxOUMzNS40NzgsLTE3LjY2NyAyOS40MzYsLTIzLjc4NCAyMi42MywtMjkuMTE3QzE1LjgsLTM0LjQ2OSA4LjIsLTM5LjAzMSAwLC00Mi42NDYiIHN0eWxlPSJmaWxsOnJnYigyMTIsMCwyOCk7ZmlsbC1ydWxlOm5vbnplcm87Ij48L3BhdGg+CiAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==" alt="">Redbird</div>
+    <form class="ask" novalidate style="display: flex; flex-direction: column; gap: 16px">
+      <div class="eyebrow">21+ only</div>
+      <h2 id="rb-age-title">How old are you?</h2>
+      <p>You must be 21 or older to visit this site. Enter your birthday to continue.</p>
+      <div class="fields">
+        <label>Month<input id="rb-m" inputmode="numeric" autocomplete="bday-month" maxlength="2" placeholder="MM" aria-label="Birth month"></label>
+        <label>Day<input id="rb-d" inputmode="numeric" autocomplete="bday-day" maxlength="2" placeholder="DD" aria-label="Birth day"></label>
+        <label>Year<input id="rb-y" inputmode="numeric" autocomplete="bday-year" maxlength="4" placeholder="YYYY" aria-label="Birth year"></label>
+      </div>
+      <div class="err" role="alert" aria-live="assertive"></div>
+      <button type="submit">Enter site</button>
+      <div class="fine">Redbird products are for adults 21 and older. For use only where legal in Washington State.</div>
+    </form>
+    <div class="denied">
+      <h2>Sorry, you must be 21 or older.</h2>
+      <p>Come back when you're 21. Thanks for stopping by.</p>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = 'rb_age_ok_until', DAYS = 30;
+  var gate = document.getElementById('rb-age');
+  var ok = false;
+  try { ok = Number(localStorage.getItem(KEY) || 0) > Date.now(); } catch (e) {}
+  if (/[?&]agecheck\b/.test(location.search)) ok = false;   // ?agecheck shows it again (for testing)
+  if (ok) return;
+  gate.hidden = false;
+  var m = document.getElementById('rb-m'), d = document.getElementById('rb-d'), y = document.getElementById('rb-y');
+  var err = gate.querySelector('.err');
+  [m, d, y].forEach(function (el, i, all) {
+    el.addEventListener('input', function () {
+      el.value = el.value.replace(/\D/g, '');
+      if (el.value.length >= el.maxLength && all[i + 1]) all[i + 1].focus();
+    });
+  });
+  setTimeout(function () { m.focus(); }, 50);
+  gate.querySelector('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var mm = +m.value, dd = +d.value, yy = +y.value, now = new Date();
+    var born = new Date(yy, mm - 1, dd);
+    if (!mm || !dd || y.value.length !== 4 || born.getMonth() !== mm - 1 || born.getDate() !== dd || born > now || yy < 1900) {
+      err.textContent = 'Please enter a real birthday (MM / DD / YYYY).'; return;
+    }
+    var age = now.getFullYear() - yy - ((now.getMonth() < mm - 1 || (now.getMonth() === mm - 1 && now.getDate() < dd)) ? 1 : 0);
+    if (age < 21) { gate.classList.add('no'); return; }
+    try { localStorage.setItem(KEY, String(Date.now() + DAYS * 864e5)); } catch (e) {}
+    gate.hidden = true;
+  });
+})();
+</script>
+
 </body>
 </html>
