@@ -197,7 +197,8 @@ button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
     segs.forEach(x => { const prev = out.join(' ').toLowerCase(); if (prev.endsWith(x.toLowerCase())) return;
       if (out.length && /^[a-z0-9]{1,3}$/i.test(x)) out[out.length - 1] += ', ' + x.toUpperCase(); else out.push(x); });   // "Ste D, E,f" → "Ste D, E, F"
     return out.join(' ')
-      .replace(/\b(ne|nw|se|sw)\b/gi, m => m.toUpperCase())
+      .replace(/\bkingjr\b/gi, 'King Jr')
+    .replace(/\b(ne|nw|se|sw)\b/gi, m => m.toUpperCase())
       .replace(/\b(sr|us|fm)(?= \d)/gi, m => m.toUpperCase())
       .replace(/\bsuite\b/gi, 'Ste').replace(/\bSte\s*#\s*/g, 'Ste ')
       .replace(/\b(Ste|Unit|Bldg) ([a-z0-9&-]+)\b/gi, (m, k, v) => k + ' ' + v.toUpperCase())
