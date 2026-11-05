@@ -306,9 +306,8 @@ function capsToTitle_(t) {
     var w0 = land[0];
     V.__RB_H_LANDLABEL__ = esc(w0 ? (w0.thisWeek ? 'Landing this week' : 'Landing week of ' + fmt(w0.week)) : 'Landing soon');
     // Nov 5: each name in "Landing this week" opens its family tree
-    V.__RB_H_LANDNAMES__ = w0 ? w0.strains.slice(0, 6).map(function (n) {
-      return '<a href="FamilyTree.dc.html#' + slug(n) + '" aria-label="' + esc(n) + ' family tree" style="color: inherit; text-decoration: none">' + esc(n) + '</a>'; }).join(' · ')
-      : esc('Check the Drops page for what\'s next');
+    // plain names: this whole block is already one link to Drops (a link inside a link breaks the layout)
+    V.__RB_H_LANDNAMES__ = esc(w0 ? w0.strains.slice(0, 6).join(' · ') : 'Check the Drops page for what\'s next');
     V.__RB_H_WKOF__ = esc(w0 ? 'WK OF ' + fmt(w0.week).toUpperCase() : '');
     V.__RB_H_CARDTITLE__ = esc(w0 && w0.thisWeek ? 'Landing this week' : 'Landing soon');
     V.__RB_H_SOON__ = js((w0 ? w0.strains.slice(0, 6) : []).map(function (n) { return [n, TYPE[n] || 'Hybrid']; }));
