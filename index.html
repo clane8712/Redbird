@@ -408,11 +408,21 @@ function capsToTitle_(t) {
     }));
     V.__RB_S_BOARD__ = js((f.board || []).map(function (b) { return { label: b.label, date: fmt(b.date), current: !!b.next, items: b.strains }; }));
     V.__RB_S_BETA__ = js(beta.map(function (b) { return { name: b.name, slug: slug(b.name), type: b.type, genetics: b.genetics, harvest: b.status }; }));
-    // Nov 9: lineup strains between runs (harvested before, not in flower, a planned harvest on the schedule)
+    // Nov 9: lineup strains between runs (harvested before, not in flower, a planned harvest on the schedule): a tile each
     var between = (f.between || []).slice().sort(function (a, b) { return byNext(a, b) || a.name.localeCompare(b.name); });
-    V.__RB_S_BETWEEN__ = between.length ? '<div data-b="between"><div class="bh"><span>Between runs</span><span class="bd"> · </span><span>Planned harvest</span></div>' +
-      '<div class="bl">' + between.map(function (x) { return '<span class="bi"><b>' + esc(x.name) + '</b> <span>' + esc(fmt(x.next)) + '</span></span>'; }).join('') + '</div>' +
-      '<p>Still in our rotation. Dates can shift, and not every planned run makes it to flower. Follow them on <a href="Drops.dc.html">Drops</a> to hear when they land.</p></div>' : '';
+    var BPILL = { Indica: 'background: rgba(124,58,237,0.07); border: 1px solid rgba(124,58,237,0.2); color: #6D28D9',
+                  Sativa: 'background: rgba(180,83,9,0.07); border: 1px solid rgba(180,83,9,0.2); color: #B45309',
+                  Hybrid: 'background: rgba(22,163,74,0.07); border: 1px solid rgba(22,163,74,0.2); color: #15803D' };
+    V.__RB_S_BETWEEN__ = between.length ? '<section data-b="bw" aria-labelledby="between-runs"><div class="bwh"><div>' +
+      '<div class="bwe">Not in flower right now</div><h2 id="between-runs">Between runs</h2>' +
+      '<p>Still in our rotation, with a run on the schedule. Dates can shift, and not every planned run makes it to flower.</p></div>' +
+      '<a href="Drops.dc.html#strains">Follow them on Drops &rarr;</a></div><div class="bwg">' +
+      between.map(function (x) {
+        return '<a class="bwt" href="FamilyTree.dc.html#' + slug(x.name) + '" aria-label="' + esc(x.name) + ' family tree"><div><h3>' + esc(x.name) + '</h3>' +
+          '<span style="display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; ' + (BPILL[x.type] || BPILL.Hybrid) + '">' + esc(x.type) + '</span></div>' +
+          (x.genetics ? '<div class="bwgen">' + esc(gen(x.genetics)) + '</div>' : '') +
+          '<div class="bwd">Planned harvest · ' + esc(fmt(x.next)) + '</div></a>';
+      }).join('') + '</div></section>' : '';
     V.__RB_S_INFLOWER__ = String(lineup.filter(function (x) { return x.inFlower; }).length);
 
     // Home
@@ -611,7 +621,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=7151153346"></script>
+<script src="site-data.js?v=01b3c8f8b4"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
