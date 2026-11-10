@@ -433,11 +433,6 @@ function capsToTitle_(t) {
     // Nov 5: each name in "Landing this week" opens its family tree
     // plain names: this whole block is already one link to Drops (a link inside a link breaks the layout)
     V.__RB_H_LANDNAMES__ = esc(w0 ? w0.strains.slice(0, 6).join(' · ') : 'Check the Drops page for what\'s next');
-    // Nov 10: each name opens Where to find it for that strain (the block is no longer one big link to Drops)
-    V.__RB_H_LANDLINKS__ = w0 ? w0.strains.slice(0, 6).map(function (n) {
-      return '<a href="Where.dc.html#' + slug(n) + '" data-h="landlink" aria-label="Where to find ' + esc(n) + '" style="color: #111111; text-decoration: none; white-space: nowrap">' + esc(n) +
-        ' <span style="color: #C8102E; font-size: 13px; font-weight: 700; margin-left: 4px">Where to find it &rarr;</span></a>';
-    }).join('') : '<a href="Drops.dc.html" style="color: #111111; text-decoration: none">Check the Drops page for what&rsquo;s next <span style="color: #C8102E">&rarr;</span></a>';
     V.__RB_H_WKOF__ = esc(w0 ? 'WK OF ' + fmt(w0.week).toUpperCase() : '');
     V.__RB_H_CARDTITLE__ = esc(w0 && w0.thisWeek ? 'Landing this week' : 'Landing soon');
     V.__RB_H_SOON__ = js((w0 ? w0.strains.slice(0, 6) : []).map(function (n) { return [n, TYPE[n] || 'Hybrid']; }));
@@ -650,7 +645,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=44e6953282"></script>
+<script src="site-data.js?v=7167b545ae"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
