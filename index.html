@@ -219,22 +219,23 @@ window.RB_CITIES = {"auburn":[47.303,-122.2],"federalway":[47.316,-122.275],"bel
     var ph = h.phenos || [], alive = ph.filter(function (p) { return p.alive; }), cut = ph.length - alive.length, seeds = h.seeds || 0;
     var soon = h.nextFlower && days(h.nextFlower, asOf) <= 45;
     var tag = back ? 'Back from seed' : (ph.length ? 'Hunting' : 'Growing out');
-    var br = back ? 'Last grown ' + h.grown + (seeds ? ' · ' + seeds + ' new seeds germinated ' + mon(h.germ) : h.germ ? ' · new seeds popped ' + mon(h.germ) : '')
-                  : [h.breeder, seeds ? seeds + ' seeds germinated ' + mon(h.germ) : h.germ ? 'popped ' + mon(h.germ) : ''].filter(Boolean).join(' · ');
+    var br = back ? 'Last grown ' + h.grown + (seeds ? ' · ' + seeds + ' new seeds started ' + mon(h.germ) : h.germ ? ' · new seeds started ' + mon(h.germ) : '')
+                  : [h.breeder, seeds ? seeds + ' seeds started ' + mon(h.germ) : h.germ ? 'started ' + mon(h.germ) : ''].filter(Boolean).join(' · ');
     var dots = '', note = '', st;
     if (ph.length) {
-      dots = '<div data-b="dots">' + ph.map(function (p) { return '<i data-d="' + (p.alive ? 'a' : 'x') + '" title="#' + esc(p.n) + (p.alive ? ' still in the hunt' : ' cut') + '"></i>'; }).join('') + '</div>';
-      if (h.tested && alive.length === 1 && cut) st = ph.length + ' phenos test-run · #' + alive[0].n + ' kept · waiting for its next run';
+      var only = ph.length === 1 && ph[0].n === 'only';   // no pheno number = only one plant made it
+      dots = '<div data-b="dots">' + ph.map(function (p) { return '<i data-d="' + (p.alive ? 'a' : 'x') + '" title="' + (p.n === 'only' ? 'The only plant' : '#' + esc(p.n)) + (p.alive ? ' still in the hunt' : ' cut') + '"></i>'; }).join('') + '</div>';
+      if (only) st = 'One plant made it' + (seeds ? ' from ' + seeds + ' seeds' : '') +
+                (h.tested ? ' · test run harvested' : h.nextFlower ? ' · first test run flowers ' + part(h.nextFlower) : '');
+      else if (h.tested && alive.length === 1 && cut) st = ph.length + ' phenos test-run · #' + alive[0].n + ' kept · waiting for its next run';
       else if (h.tested) st = h.tested + ' of ' + ph.length + ' phenos test-run · ' + alive.length + ' still in the hunt';
-      else st = ph.length + ' pheno' + (ph.length === 1 ? '' : 's') + ' cloned' + (seeds ? ' from ' + seeds + ' seeds' : '') + (cut ? ' · ' + cut + ' cut' : '') +
+      else st = ph.length + ' pheno' + (ph.length === 1 ? '' : 's') + (seeds ? ' from ' + seeds + ' seeds' : '') + (cut ? ' · ' + cut + ' cut' : '') +
                 (h.nextFlower ? ' · first flower tests start ' + part(h.nextFlower) : '');
     } else if (back) {
       st = h.nextFlower ? 'In veg · first flower run pencilled for ' + MON[+h.nextFlower.split('-')[1] - 1] : 'Seedlings · no flower run yet';
     } else {
-      var n = Math.min(seeds, 30);
-      if (n) dots = '<div data-b="dots" data-k="seeds">' + new Array(n + 1).join('<i data-d="s"></i>') + '</div>';
-      note = '<div style="font-size: 12.5px; color: #8A8A93; font-style: italic">Phenos get numbered when they\'re first cloned</div>';
-      st = h.nextFlower ? 'Growing out · first clones flower ' + part(h.nextFlower) : 'Growing out · no clones yet';
+      note = '<div style="font-size: 12.5px; color: #8A8A93; font-style: italic">Females get a pheno number once the sex test comes back</div>';
+      st = h.nextFlower ? 'Seedlings growing out · first clones flower ' + part(h.nextFlower) : 'Seedlings growing out · waiting on sex tests';
     }
     return '<article data-b="hc" style="background: #FFFFFF; border: 1px ' + (back ? 'solid rgba(0,0,0,0.12)' : 'dashed #C9C9D1') + '; border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; min-width: 0">' +
       '<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">' +
@@ -645,7 +646,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=3c230ee445"></script>
+<script src="site-data.js?v=19da51bfd3"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
