@@ -110,10 +110,18 @@ button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .caption { max-width: 1440px; margin: 0 auto 12px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
 
 /* phones: one slim row (bird + view tabs); the site's own menu handles pages */
+/* phones and tablets: only the three view tabs; the site's own menu handles pages */
+@media (max-width: 900px) {
+  .pages { display: none !important; }
+  .brand > div { display: none; }
+  .bar { flex-wrap: nowrap; }
+}
 @media (max-width: 560px) {
   .bar { padding-block: 8px; gap: 10px; flex-wrap: nowrap; }
   .brand > div { display: none; }
   .brand img { height: 17px; }
+  .views { flex: 1; min-width: 0; }
+  .views button { flex: 1; height: 36px; padding: 0 8px; font-size: 14px; white-space: nowrap; }
 }
 @media (max-width: 380px) {
   .views button { font-size: 12px; padding: 0 3px; }
