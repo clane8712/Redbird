@@ -149,6 +149,7 @@ button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
     <button data-page="Beta">Beta</button>
     <button data-page="Drops">Drops</button>
     <button data-page="Contact">Contact</button>
+    <button data-page="Retailers">For Retailers</button>
   </nav>
 </header>
 
@@ -684,7 +685,6 @@ function capsToTitle_(t) {
         if (!a) return;
         var href = a.getAttribute('href') || '';
         var m = href.match(/^([A-Za-z-]+)\.dc\.html(?:#([a-z0-9-]+))?$/);
-        if (m && m[1] === 'Retailers') { ev.preventDefault(); window.location.href = 'reserve/'; return; }   // For Retailers = the reservation portal
         if (m && m[1] === 'FamilyTree') { ev.preventDefault(); window.open("https://clane8712.github.io/Redbird-Lineage/" + (m[2] ? '#' + m[2] : ''), '_blank', 'noopener'); return; }
         if (m) {
           ev.preventDefault();
@@ -692,6 +692,14 @@ function capsToTitle_(t) {
           var target = m[1];
           if (mode === 'mobile') { state.mobilePage = target; if (TOKENS[target]) state.page = target; render(); }
           else if (FROM_TOKEN[TOKENS[target]]) { go('desktop', target); }
+          return;
+        }
+        var pm = href.match(/^\.\.\/(?:#([a-z]+))?$/);          // links on the portal page (reserve/)
+        if (pm || href === './') {
+          ev.preventDefault();
+          var tgt = href === './' ? 'Retailers' : (FROM_TOKEN[pm[1] || 'home'] || 'Main');
+          if (mode === 'mobile') { state.mobilePage = tgt; if (TOKENS[tgt]) state.page = tgt; render(); }
+          else go('desktop', tgt);
           return;
         }
         if (href.charAt(0) === '#') ev.preventDefault();
@@ -704,7 +712,8 @@ function capsToTitle_(t) {
     var f = document.createElement('iframe');
     f.title = title;
     wire(f, mode);
-    f.srcdoc = pageDoc(name);
+    if (name === 'Retailers') f.src = 'reserve/';   // For Retailers = the reservation portal, a real page
+    else f.srcdoc = pageDoc(name);
     return f;
   }
 
