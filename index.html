@@ -684,6 +684,7 @@ function capsToTitle_(t) {
         if (!a) return;
         var href = a.getAttribute('href') || '';
         var m = href.match(/^([A-Za-z-]+)\.dc\.html(?:#([a-z0-9-]+))?$/);
+        if (m && m[1] === 'Retailers') { ev.preventDefault(); window.location.href = 'reserve/'; return; }   // For Retailers = the reservation portal
         if (m && m[1] === 'FamilyTree') { ev.preventDefault(); window.open("https://clane8712.github.io/Redbird-Lineage/" + (m[2] ? '#' + m[2] : ''), '_blank', 'noopener'); return; }
         if (m) {
           ev.preventDefault();
