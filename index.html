@@ -708,11 +708,21 @@ function capsToTitle_(t) {
     });
   }
 
+  // Links from portal emails (?r=&t=, ?c=, ?email=) land on reserve/, which bounces here; pass them through to the portal frame.
+  function portalQS() {
+    var q = new URLSearchParams(location.search), out = new URLSearchParams();
+    ['r', 't', 'c', 'contactId', 'email', 'acct', 'account', 'contact'].forEach(function (k) { if (q.get(k)) { out.set(k, q.get(k)); q.delete(k); } });
+    var s = out.toString();
+    // Used once, so switching Desktop/Mobile later doesn't reopen an old link.
+    if (s) { var rest = q.toString(); try { history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash); } catch (e) {} }
+    return s ? '?' + s : '';
+  }
+
   function makeFrame(name, title, mode) {
     var f = document.createElement('iframe');
     f.title = title;
     wire(f, mode);
-    if (name === 'Retailers') f.src = 'reserve/';   // For Retailers = the reservation portal, a real page
+    if (name === 'Retailers') f.src = 'reserve/' + portalQS();   // For Retailers = the reservation portal, a real page
     else f.srcdoc = pageDoc(name);
     return f;
   }
