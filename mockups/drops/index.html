@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drops mockup · Redbird</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+:root { --red:#C8102E; --ink:#111111; --mute:#6B6B6B; --line:rgba(0,0,0,0.09); --bg:#F2F2F4; --pink:#FCEEF0; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 "DM Sans", system-ui, sans-serif; }
+.mono { font-family:"Space Mono", monospace; text-transform:uppercase; letter-spacing:1.6px; }
+.bebas { font-family:"Bebas Neue", sans-serif; letter-spacing:.5px; font-weight:400; }
+a { color:inherit; text-decoration:none; }
+button { font:inherit; cursor:pointer; }
+.wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+
+/* header (Find a shop button removed, Beta off the menu) */
+header { background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+header .wrap { display:flex; align-items:center; gap:28px; height:74px; }
+.logo { font:700 30px/1 "DM Sans"; color:var(--red); letter-spacing:-1px; display:flex; align-items:center; gap:6px; }
+.logo svg { width:30px; height:30px; }
+nav { display:flex; align-items:center; gap:4px; flex:1; }
+nav a { padding:8px 14px; border-radius:8px; color:#333; font-size:15px; }
+nav a.on { background:var(--pink); color:var(--red); font-weight:600; box-shadow: inset 0 0 0 1px rgba(200,16,46,.25); }
+nav .sep { width:1px; height:24px; background:rgba(0,0,0,.15); margin:0 10px; }
+.ig { width:46px; height:46px; border:1px solid var(--line); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+.retail { background:var(--red); color:#fff; font-weight:700; font-size:15px; height:46px; padding:0 20px; border-radius:10px; display:flex; align-items:center; white-space:nowrap; }
+.burger { display:none; width:44px; height:44px; border:1px solid rgba(0,0,0,.15); border-radius:10px; align-items:center; justify-content:center; margin-left:auto; }
+
+/* hero */
+.hero { background:#fff; border-bottom:1px solid var(--line); padding:48px 0 44px; }
+.eyebrow { color:var(--red); font-size:12px; }
+h1 { font-family:"Bebas Neue"; font-weight:400; font-size:84px; line-height:.92; margin:14px 0 18px; letter-spacing:1px; }
+.lede { max-width:640px; color:#444; font-size:17px; margin:0; }
+
+/* body */
+.cols { display:grid; grid-template-columns: 1fr 340px; gap:24px; padding:32px 0 60px; align-items:start; }
+.cols > * { min-width:0; }
+.tabs { display:inline-flex; background:#fff; border:1px solid var(--line); border-radius:12px; padding:4px; gap:4px; margin-bottom:16px; }
+.tabs button { border:0; background:transparent; border-radius:9px; padding:10px 22px; font-size:16px; font-weight:600; color:#333; }
+.tabs button.on { background:var(--pink); color:var(--red); box-shadow: inset 0 0 0 1px rgba(200,16,46,.3); }
+.search { display:flex; gap:10px; margin-bottom:12px; }
+.search .box { flex:1; display:flex; align-items:center; gap:10px; background:#fff; border:1px solid rgba(0,0,0,.14); border-radius:10px; padding:0 14px; height:50px; color:#999; }
+.near { background:#fff; border:1px solid rgba(0,0,0,.14); border-radius:10px; padding:0 18px; height:50px; display:flex; align-items:center; gap:8px; font-weight:600; white-space:nowrap; }
+.chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+.chip { background:#fff; border:1px solid rgba(0,0,0,.12); border-radius:8px; padding:7px 14px; font-size:14px; }
+.chip.on { background:var(--pink); color:var(--red); border-color:rgba(200,16,46,.35); }
+.count { font-size:11px; color:var(--mute); margin:4px 0 10px; }
+
+.list { background:#fff; border-radius:14px; box-shadow:0 0 0 1px var(--line); overflow:hidden; }
+.shop { padding:16px 20px; border-top:1px solid var(--line); }
+.shop:first-child { border-top:0; }
+.row { display:flex; align-items:flex-start; gap:16px; }
+.row .main { flex:1; min-width:0; }
+.name { font-weight:600; font-size:17px; }
+.addr { color:#555; font-size:14px; }
+.last { margin-top:6px; font-size:14px; color:#333; }
+.last .mono { font-size:11px; color:var(--mute); margin-right:8px; }
+.last .more { color:var(--red); font-weight:600; margin-left:4px; }
+.fol { border:1px solid rgba(0,0,0,.14); background:#fff; border-radius:9px; height:40px; padding:0 18px; font-weight:600; font-size:14px; white-space:nowrap; }
+.fol.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+.chev { width:40px; height:40px; border-radius:9px; border:1px solid rgba(0,0,0,.1); background:#fff; display:flex; align-items:center; justify-content:center; color:#555; }
+
+/* expanded shop: recent drops */
+.shop.open { background:#FBFBFC; }
+.drops { margin-top:14px; border-radius:12px; background:#fff; box-shadow:0 0 0 1px var(--line); }
+.drop { display:grid; grid-template-columns: 120px 1fr 1fr; gap:18px; padding:14px 16px; border-top:1px solid var(--line); }
+.drop:first-child { border-top:0; }
+.drop .when b { display:block; font-family:"Bebas Neue"; font-weight:400; font-size:24px; line-height:1; }
+.drop .when span { font-size:12px; color:var(--mute); }
+.drop .grp .mono { font-size:10.5px; color:var(--mute); font-weight:700; display:block; margin-bottom:4px; }
+.drop .grp div { font-size:14.5px; line-height:1.7; }
+.drop .grp + .grp { border-left:1px solid var(--line); padding-left:18px; }
+.tag-new { display:inline-block; background:#E9F6EC; color:#1E7B37; font-size:11px; font-weight:700; border-radius:999px; padding:2px 8px; margin-left:8px; vertical-align:2px; }
+.note { font-size:12.5px; color:var(--mute); padding:10px 16px 14px; border-top:1px solid var(--line); }
+
+/* alerts panel (unchanged from today) */
+.panel { background:#fff; border-radius:14px; box-shadow:0 0 0 1px var(--line); overflow:hidden; position:sticky; top:96px; }
+.panel .top { background:var(--ink); color:#fff; padding:22px; }
+.panel .top .mono { color:#F2A3AE; font-size:11px; }
+.panel .top .bebas { font-size:34px; line-height:1; margin-top:6px; }
+.panel .bd { padding:18px 22px 22px; }
+.panel .lbl { font-size:10.5px; font-weight:700; color:var(--mute); margin:12px 0 6px; }
+.pill { display:inline-flex; align-items:center; gap:6px; border:1px solid rgba(0,0,0,.14); border-radius:999px; padding:5px 12px; font-size:13.5px; margin:0 6px 6px 0; }
+.pill.red { color:var(--red); border-color:rgba(200,16,46,.4); border-style:dashed; }
+.field { height:46px; border:1px solid rgba(0,0,0,.14); border-radius:9px; background:#F6F6F7; margin:6px 0 12px; display:flex; align-items:center; padding:0 12px; color:#999; font-size:15px; }
+.go { width:100%; height:48px; border:0; border-radius:10px; background:var(--red); color:#fff; font-weight:700; font-size:16px; }
+
+/* strains tab */
+.sgrid { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+.res .row .dist { font-family:"Space Mono"; font-size:12px; color:var(--mute); white-space:nowrap; padding-top:4px; }
+.res .when { font-size:14px; margin-top:4px; }
+.res .when .mono { font-size:11px; color:var(--mute); margin-right:8px; }
+.callout { display:flex; align-items:center; justify-content:space-between; gap:12px; background:#fff; border-radius:12px; box-shadow:0 0 0 1px var(--line); padding:14px 18px; margin-bottom:12px; }
+.callout b { font-family:"Bebas Neue"; font-weight:400; font-size:26px; line-height:1; }
+.section-gap { height:40px; }
+.mock-label { font-family:"Space Mono"; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--mute); margin:0 0 10px; }
+
+/* phone */
+@media (max-width: 720px) {
+  .logo img { height:28px !important; }
+  .wrap { padding:0 16px; }
+  header .wrap { height:62px; gap:10px; }
+  nav, .ig { display:none; }
+  .burger { display:flex; margin-left:0; }
+  .retail { height:40px; padding:0 14px; font-size:14px; margin-left:auto; }
+  .logo { font-size:26px; }
+  .hero { padding:28px 0 26px; }
+  h1 { font-size:52px; margin:10px 0 12px; }
+  .lede { font-size:15.5px; }
+  .cols { grid-template-columns: 1fr; padding:20px 0 40px; }
+  .tabs { display:flex; } .tabs button { flex:1; }
+  .search { flex-wrap:wrap; } .near { width:100%; justify-content:center; }
+  .chips { flex-wrap:nowrap; overflow-x:auto; padding-bottom:2px; } .chip { white-space:nowrap; }
+  .shop { padding:14px 14px; }
+  .row { gap:10px; }
+  .fol { padding:0 12px; height:36px; }
+  .chev { display:none; }
+  .drop { grid-template-columns: 1fr 1fr; gap:10px 14px; }
+  .drop .when { grid-column:1 / -1; display:flex; align-items:baseline; gap:10px; }
+  .drop .grp + .grp { padding-left:14px; }
+  .panel { position:static; }
+  .hide-ph { display:none; }
+}
+</style>
+</head>
+<body>
+<div style="background:#111;color:#fff;font:600 12px/1 'Space Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:9px 12px">Mockup · sample data · not live</div>
+<header><div class="wrap">
+  <a class="logo" href="#"><img src="logo.svg" alt="Redbird" style="height:32px;display:block"></a>
+  <nav>
+    <a href="#">Products</a><a href="#">Strains</a><a href="#">Beta</a><a class="on" href="#">Drops</a><a href="#">Contact</a><a href="#">Merch</a>
+  </nav>
+  <a class="ig" href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#111"/></svg></a>
+  <a class="retail" href="#">For Retailers</a>
+  <span class="burger"><svg width="20" height="20" viewBox="0 0 24 24" stroke="#111" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div class="eyebrow mono">Redbird Drops</div>
+  <h1>Know when it lands at your shop.</h1>
+  <p class="lede">See what just dropped at your shop, find the shops that got your favorite strain, and get an email when fresh Redbird hits the shelf.</p>
+</div></section>
+
+<div class="wrap"><div class="cols">
+  <div>
+    <!-- SHOPS TAB -->
+    <div class="tabs"><button class="on">Shops</button><button>Strains</button></div>
+    <div class="search">
+      <div class="box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Shop, city or zip</div>
+      <div class="near"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2.2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Shops near me</div>
+    </div>
+    <div class="chips"><span class="chip on">Spokane</span><span class="chip">King</span><span class="chip">Clark</span><span class="chip">Pierce</span><span class="chip">Snohomish</span><span class="chip">Thurston</span><span class="chip">All counties</span></div>
+    <div class="count mono">14 shops in Spokane County · most recent drops first</div>
+
+    <div class="list">
+      <div class="shop open">
+        <div class="row">
+          <div class="main">
+            <div class="name">Smokane</div>
+            <div class="addr">3801 E Sprague Ave · Spokane</div>
+            <div class="last"><span class="mono">Last drop Nov 12</span>Raspberry Dosido · GMO · Kush Mints <span class="more">+3</span></div>
+          </div>
+          <button class="fol on">✓ Following</button>
+          <span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><path d="M6 15l6-6 6 6"/></svg></span>
+        </div>
+        <div class="drops">
+          <div class="drop">
+            <div class="when"><b>Nov 12</b><span>4 days ago</span></div>
+            <div class="grp"><span class="mono">Flower &amp; Micro Buds</span><div>Raspberry Dosido</div><div>GMO</div><div>Kush Mints<span class="tag-new">New</span></div></div>
+            <div class="grp"><span class="mono">Pre-rolls</span><div>Blue Dream</div><div>Crunch Berries</div><div>Grape Cake</div></div>
+          </div>
+          <div class="drop">
+            <div class="when"><b>Oct 29</b><span>2 weeks ago</span></div>
+            <div class="grp"><span class="mono">Flower &amp; Micro Buds</span><div>Chocolate Bars</div><div>Colonel Crunch</div></div>
+            <div class="grp"><span class="mono">Pre-rolls</span><div>Raspberry Dosido</div><div>White OG</div></div>
+          </div>
+          <div class="drop">
+            <div class="when"><b>Oct 15</b><span>4 weeks ago</span></div>
+            <div class="grp"><span class="mono">Flower &amp; Micro Buds</span><div>Blue Dream</div><div>Sour Diesel</div></div>
+            <div class="grp"><span class="mono">Pre-rolls</span><div>Kush Cream Cake</div></div>
+          </div>
+          <div class="note">Last 30 days. What a shop got, not what's on the shelf today: call the shop before you go.</div>
+        </div>
+      </div>
+      <div class="shop"><div class="row"><div class="main"><div class="name">Lucky Leaf</div><div class="addr">1111 W 1st Ave Ste A · Spokane</div><div class="last"><span class="mono">Last drop Nov 10</span>Grape Cake · Blue Dream · Crunch Berries <span class="more">+1</span></div></div><button class="fol">+ Follow</button><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span></div></div>
+      <div class="shop"><div class="row"><div class="main"><div class="name">Toker Friendly</div><div class="addr">1515 S Lyons Rd Ste B · Airway Heights</div><div class="last"><span class="mono">Last drop Nov 6</span>Kush Cream Cake · LA Pop Rockz <span class="more">+2</span></div></div><button class="fol">+ Follow</button><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span></div></div>
+      <div class="shop hide-ph"><div class="row"><div class="main"><div class="name">Cinder – North</div><div class="addr">6010 N Division St · Spokane</div><div class="last"><span class="mono">Last drop Nov 3</span>Sour Diesel · Chocolate Bars · GMO</div></div><button class="fol">+ Follow</button><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span></div></div>
+    </div>
+
+    <div class="section-gap"></div>
+    <!-- STRAINS TAB (what Strain Finder does today) -->
+    <p class="mock-label">Same spot, Strains tab selected</p>
+    <div class="tabs"><button>Shops</button><button class="on">Strains</button></div>
+    <div class="search">
+      <div class="box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Search strains</div>
+      <div class="near"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2.2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Near 99203</div>
+    </div>
+    <div class="sgrid"><span class="chip on">Raspberry Dosido</span><span class="chip">GMO</span><span class="chip">Kush Mints</span><span class="chip">Grape Cake</span><span class="chip">Blue Dream</span><span class="chip hide-ph">Chocolate Bars</span><span class="chip hide-ph">Sour Diesel</span><span class="chip">All strains</span></div>
+    <div class="callout"><div><span class="mono" style="font-size:11px;color:var(--mute)">Shops that got it · last 30 days</span><br><b>Raspberry Dosido</b></div><button class="fol">+ Follow strain</button></div>
+    <div class="list res">
+      <div class="shop"><div class="row"><div class="main"><div class="name">Smokane</div><div class="addr">3801 E Sprague Ave · Spokane</div><div class="when"><span class="mono">Dropped Nov 12</span>Flower · Pre-rolls</div></div><span class="dist">2.1 mi</span><button class="fol on">✓ Following</button></div></div>
+      <div class="shop"><div class="row"><div class="main"><div class="name">Cinder – Downtown</div><div class="addr">927 W 2nd Ave Ste 1 · Spokane</div><div class="when"><span class="mono">Dropped Nov 9</span>Flower · Micro Buds</div></div><span class="dist">2.8 mi</span><button class="fol">+ Follow</button></div></div>
+      <div class="shop"><div class="row"><div class="main"><div class="name">Sativa Sisters – Spokane</div><div class="addr">10525 E Trent Ave Ste 1 · Spokane</div><div class="when"><span class="mono">Dropped Oct 30</span>Pre-rolls</div></div><span class="dist">9.4 mi</span><button class="fol">+ Follow</button></div></div>
+    </div>
+  </div>
+
+  <!-- alerts panel: same as today -->
+  <aside class="panel">
+    <div class="top"><div class="mono">Your alerts</div><div class="bebas">1 shop · 0 strains</div></div>
+    <div class="bd">
+      <div class="lbl mono">Shops</div><span class="pill">Smokane ✕</span><span class="pill red">+ Add shops</span>
+      <div class="lbl mono">Strains</div><span class="pill red">+ Add strains</span>
+      <div class="lbl mono">What do you buy?</div><span class="pill red" style="border-style:solid">✓ Flower</span><span class="pill red" style="border-style:solid">✓ Micro Buds</span><span class="pill red" style="border-style:solid">✓ Pre-rolls</span>
+      <div style="font-size:13px;color:var(--mute);margin:4px 0 10px">We'll only email you about these. Beta Bud counts in all three.</div>
+      <div style="font-weight:600;font-size:14px">Email</div><div class="field">you@email.com</div>
+      <button class="go">Start my alerts</button>
+    </div>
+  </aside>
+</div></div>
+</body>
+</html>
