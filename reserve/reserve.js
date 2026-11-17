@@ -125,26 +125,6 @@
   function cartWeeks() { return S.weeks.filter(function (w) { return weekTotals(wid(w)).u > 0; }); }
 
   // ───────── rendering ─────────
-  // Nov 17: line up the Indica/Sativa/Hybrid tags in each list: every name in a list gets the width of the
-  // longest one (capped, so one very long name doesn't push the whole column over)
-  function alignNames() {
-    if (!root) return;
-    var groups = [];
-    root.querySelectorAll('.rbp-name, .rbp-ritem-name > b').forEach(function (el) {
-      var box = el.closest('.rbp-rcard, section, table') || root, g = groups.filter(function (x) { return x.box === box; })[0];
-      if (!g) groups.push(g = { box: box, els: [] });
-      g.els.push(el);
-    });
-    groups.forEach(function (g) {
-      g.els.forEach(function (el) { el.style.minWidth = ''; });
-      var cap = g.box.getBoundingClientRect().width * 0.5, w = 0;
-      g.els.forEach(function (el) { var x = el.getBoundingClientRect().width; if (x <= cap && x > w) w = x; });
-      if (w) g.els.forEach(function (el) { el.style.minWidth = Math.ceil(w) + 'px'; });
-    });
-  }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { alignNames(); });
-  var alignT; window.addEventListener('resize', function () { clearTimeout(alignT); alignT = setTimeout(alignNames, 120); });
-
   function render() {
     hdrHeight();
     var html = hero();
@@ -155,7 +135,6 @@
     else if (S.screen === 'cancelled') html += main(cancelled(), 'rbp-review');
     else html += main(browse(), '', totals().u > 0) + bar();
     root.innerHTML = html;
-    alignNames();
     var b0 = document.getElementById('rbp-bar'); document.body.classList.toggle('rbp-has-bar', !!(b0 && !b0.hidden));   // footer gets room so the bar never covers it
     if (S.mode === 'in' && S.screen === 'browse') spy();
     root.querySelectorAll('.rbp-rhead[data-act="collapse"]').forEach(function (x) { x.onkeydown = function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); x.click(); } }; });
