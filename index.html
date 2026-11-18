@@ -157,7 +157,6 @@ button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
   </div>
   <nav class="pages" id="pages" aria-label="Desktop pages">
     <button data-page="Main">Home</button>
-    <button data-page="Flower">Products</button>
     <button data-page="Strains">Strains</button>
     <button data-page="Beta">Beta</button>
     <button data-page="Drops">Drops</button>
@@ -706,7 +705,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=6263db4f66"></script>
+<script src="site-data.js?v=e962714fdb"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
@@ -726,8 +725,9 @@ function capsToTitle_(t) {
   var PRODUCT_PAGES = { Flower: 1, Micro: 1, Prerolls: 1, Rosin: 1, BetaBud: 1 };
   var state = { view: 'desktop', page: 'Main', mobilePage: 'Main' };
   // Nov 18 mockup: one Products page. The old sub-pages open it at their card.
-  var ONE = { Micro: 'micro-buds', Prerolls: 'pre-rolls', BetaBud: 'beta-bud' };
-  function one(p) { if (ONE[p]) { window.RB_JUMP = ONE[p]; return 'Flower'; } return p; }
+  // Nov 18 mockup: no Products page. Any old Products link opens the home page at the Products cards.
+  var ONE = { Flower: 1, Micro: 1, Prerolls: 1, BetaBud: 1 };
+  function one(p) { if (ONE[p]) { window.RB_JUMP = 'products'; return 'Main'; } return p; }
 
   function pageDoc(name) {
     var src = window.RB_FILL(window.RB_PAGES[name]);
