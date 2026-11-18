@@ -558,6 +558,9 @@ function capsToTitle_(t) {
     var wh = f.where || {};
     Object.keys(wh).forEach(function (n) { addW(n, wh[n].type, wh[n].genetics, '', '', ''); });
     wList.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    var fSelf = {}, fBeta = {};
+    lineup.forEach(function (x) { fSelf[x.name] = 1; }); between.forEach(function (x) { fSelf[x.name] = 1; }); beta.forEach(function (b) { fBeta[b.name] = 1; });
+    wList.forEach(function (w) { w.follow = fSelf[w.name] ? 'self' : fBeta[w.name] ? 'beta' : ''; });
     V.__RB_W_DATA__ = js({ strains: wList, where: wh,
       shops: shops.map(function (s) { return { id: s.id, name: s.name, address: s.address, city: s.city, zip: s.zip }; }) });
     V.__RB_D_CARDS__ = w0 ? ('<div style="background: #FFFFFF; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden">' +
@@ -703,7 +706,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=2180c81885"></script>
+<script src="site-data.js?v=7aaccd9e7b"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
@@ -918,6 +921,7 @@ function capsToTitle_(t) {
   var ok = false;
   try { ok = Number(localStorage.getItem(KEY) || 0) > Date.now(); } catch (e) {}
   if (/[?&]agecheck\b/.test(location.search)) ok = false;   // ?agecheck shows it again (for testing)
+  if (/[?&]unsub=/.test(location.search)) ok = true;         // Nov 18: an unsubscribe link from our emails never sits behind the age check
   if (ok) return;
   gate.hidden = false;
   var m = document.getElementById('rb-m'), d = document.getElementById('rb-d'), y = document.getElementById('rb-y');
