@@ -706,7 +706,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=dfa22d3232"></script>
+<script src="site-data.js?v=27a9cca718"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
@@ -725,6 +725,9 @@ function capsToTitle_(t) {
   var FROM_TOKEN = { home: 'Main', products: 'Flower', micro: 'Micro', prerolls: 'Prerolls', rosin: 'Rosin', betabud: 'BetaBud', strains: 'Strains', beta: 'Beta', drops: 'Drops', contact: 'Contact', retailers: 'Retailers', merch: 'Merch', where: 'Where' };
   var PRODUCT_PAGES = { Flower: 1, Micro: 1, Prerolls: 1, Rosin: 1, BetaBud: 1 };
   var state = { view: 'desktop', page: 'Main', mobilePage: 'Main' };
+  // Nov 18 mockup: one Products page. The old sub-pages open it at their card.
+  var ONE = { Micro: 'micro-buds', Prerolls: 'pre-rolls', BetaBud: 'beta-bud' };
+  function one(p) { if (ONE[p]) { window.RB_JUMP = ONE[p]; return 'Flower'; } return p; }
 
   function pageDoc(name) {
     var src = window.RB_FILL(window.RB_PAGES[name]);
@@ -739,6 +742,8 @@ function capsToTitle_(t) {
       var doc;
       try { doc = frame.contentDocument; } catch (e) { return; }
       if (!doc) return;
+      if (window.RB_JUMP) { var jid = window.RB_JUMP, jn = 0; window.RB_JUMP = '';
+        (function jump() { var el = doc.getElementById(jid); if (el) el.scrollIntoView({ block: 'start' }); else if (++jn < 30) setTimeout(jump, 100); })(); }
       doc.addEventListener('click', function (ev) {
         var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
         if (!a) return;
@@ -748,7 +753,7 @@ function capsToTitle_(t) {
         if (m) {
           ev.preventDefault();
           window.RB_TOPIC = m[2] || '';   // e.g. Contact.dc.html#retail opens Contact on that topic
-          var target = m[1];
+          var target = one(m[1]);
           if (mode === 'mobile') { state.mobilePage = target; if (TOKENS[target]) state.page = target; render(); }
           else if (FROM_TOKEN[TOKENS[target]]) { go('desktop', target); }
           return;
@@ -849,7 +854,7 @@ function capsToTitle_(t) {
 
   function go(view, page) {
     state.view = view;
-    if (page) state.page = page;
+    if (page) state.page = one(page);
     if (view === 'mobile') state.mobilePage = state.page;
     var token = view === 'desktop' ? TOKENS[state.page] : view;
     try { history.replaceState(null, '', '#' + token); } catch (e) {}
@@ -862,7 +867,7 @@ function capsToTitle_(t) {
   function fromHash() {
     var h = (location.hash || '').replace('#', '').toLowerCase();
     if (h === 'mobile' || h === 'style') { state.view = h; }
-    else if (FROM_TOKEN[h]) { state.view = 'desktop'; state.page = FROM_TOKEN[h]; }
+    else if (FROM_TOKEN[h]) { state.view = 'desktop'; state.page = one(FROM_TOKEN[h]); }
     render();
   }
   window.addEventListener('hashchange', fromHash);
