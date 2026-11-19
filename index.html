@@ -433,11 +433,13 @@ function capsToTitle_(t) {
       '<a href="Drops.dc.html#strains">Follow them on Drops &rarr;</a></div><div class="bwg">' +
       between.map(function (x) {
         // Nov 9: the tile opens the family tree; "Where to find it" sits above that link
-        return '<div class="bwt"><a class="bwo" href="FamilyTree.dc.html#' + slug(x.name) + '" aria-label="' + esc(x.name) + ' family tree"></a><div><h3>' + esc(x.name) + '</h3>' +
+        // Nov 18: the strain's label art on the left, like the lineup cards (only when there is real art)
+        var art = img(x.name), pic = art[1] === 'label' ? '' : '<img class="bwi" src="' + art[0] + '" alt="' + esc(x.name) + ' strain art">';
+        return '<div class="bwt' + (pic ? ' bwart' : '') + '"><a class="bwo" href="FamilyTree.dc.html#' + slug(x.name) + '" aria-label="' + esc(x.name) + ' family tree"></a>' + pic + '<div class="bwb"><div><h3>' + esc(x.name) + '</h3>' +
           '<span style="display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; ' + (BPILL[x.type] || BPILL.Hybrid) + '">' + esc(x.type) + '</span></div>' +
           (x.genetics ? '<div class="bwgen">' + esc(gen(x.genetics)) + '</div>' : '') +
           '<div class="bwd">Planned harvest · ' + esc(fmt(x.next)) + '</div>' +
-          '<a class="bwl" href="Where.dc.html#' + slug(x.name) + '" aria-label="Where to find ' + esc(x.name) + '">Where to find it &rarr;</a></div>';
+          '<a class="bwl" href="Where.dc.html#' + slug(x.name) + '" aria-label="Where to find ' + esc(x.name) + '">Where to find it &rarr;</a></div></div>';
       }).join('') + '</div></section>' : '';
     V.__RB_S_INFLOWER__ = String(lineup.filter(function (x) { return x.inFlower; }).length);
 
@@ -714,7 +716,7 @@ function capsToTitle_(t) {
 </script>
 <script>
 </script>
-<script src="site-data.js?v=a0e2e3f1f4"></script>
+<script src="site-data.js?v=4150aa9c16"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
