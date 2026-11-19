@@ -450,13 +450,15 @@ function capsToTitle_(t) {
     V.__RB_H_WKOF__ = esc(w0 ? 'WK OF ' + fmt(w0.week).toUpperCase() : '');
     V.__RB_H_CARDTITLE__ = esc(w0 && w0.thisWeek ? 'Landing this week' : 'Landing soon');
     V.__RB_H_SOON__ = js((w0 ? w0.strains.slice(0, 6) : []).map(function (n) { return [n, TYPE[n] || 'Hybrid']; }));
-    // Nov 18: "Harvesting next week": only strains whose harvest falls Mon-Sun of next week (matches "Landing this week").
-    // No harvest next week: the first week after that with one ("Harvesting week of Dec 7").
-    var T0 = dkey(new Date()), dow = (new Date().getDay() + 6) % 7, mon0 = plus(T0, -dow), nxt = plus(mon0, 7);
-    var upcoming = lineup.filter(function (x) { return x.inFlower && x.next && x.next >= nxt; }).slice().sort(byNext);
-    var wkOf = function (d) { var p = d.split('-'), w = (new Date(+p[0], +p[1] - 1, +p[2]).getDay() + 6) % 7; return plus(d, -w); };
-    var rotWk = upcoming.length ? wkOf(upcoming[0].next) : '';
-    var rot = upcoming.filter(function (x) { return wkOf(x.next) === rotWk; }).slice(0, 8);
+    // Nov 18: "Harvesting next": every lineup strain on the next harvest day (the harvest schedule's "Next harvest").
+    // A gap in the schedule just means the next harvest is further out; no dates shown.
+    var LBY = {}; lineup.forEach(function (x) { LBY[x.name] = x; });
+    var nextB = (f.board || []).filter(function (b) { return b.next; })[0];
+    var rot = nextB ? (nextB.strains || []).map(function (n) { return LBY[n]; }).filter(Boolean) : [];
+    if (!rot.length) {   // no harvest board: fall back to the earliest harvest date on the lineup
+      var up = lineup.filter(function (x) { return x.inFlower && x.next; }).slice().sort(byNext);
+      rot = up.filter(function (x) { return up.length && x.next === up[0].next; });
+    }
     V.__RB_H_ROT__ = js(rot.map(function (x) { return [x.name, x.type, x.genetics, x.breeder, slug(x.name)]; }));
     // Nov 17: home "Seed to shelf" tracker (Beta → Grow → Harvest → Cure → Your hand), all live from the feed except the cure time
     var MONO = "font-family: 'Space Mono', monospace; letter-spacing: 1.2px; text-transform: uppercase; ";
@@ -483,8 +485,8 @@ function capsToTitle_(t) {
       stage('04', 'Cure', '~2 WK', 'dry &amp; cure', 'Every harvest dries and cures for about two weeks before it ships.') +
       stage('05', 'Your hand', String(shopsWk || '—'), w0 && w0.thisWeek ? 'shops this week' : 'shops next drop', 'The Finder shows which shops just got it. Drops emails you when your strain lands.', lk('Where.dc.html', 'Open the Finder')) +
       '</div>';
-    V.__RB_H_ROTTITLE__ = 'Harvesting next';   // the line under it names the week
-    V.__RB_H_ROTSUB__ = esc(rot.length ? 'Coming out of the flower rooms the week of ' + fmt(rotWk) + ' to ' + fmt(plus(rotWk, 6)) + '.' : 'Check the Strains page for harvest dates.');
+    V.__RB_H_ROTTITLE__ = 'Harvesting next';
+    V.__RB_H_ROTSUB__ = esc(rot.length ? 'The next strains coming out of the flower rooms.' : 'Check the Strains page for harvest dates.');
     V.__RB_H_SEEALL__ = esc('See all ' + lineup.length + ' →');
     V.__RB_H_BETA__ = beta.slice(0, 4).map(function (b) { return tree(betaCard(b), b.name); }).join('');   // Nov 5: home Beta tiles open the family tree
 
