@@ -483,8 +483,8 @@ function capsToTitle_(t) {
       stage('04', 'Cure', '~2 WK', 'dry &amp; cure', 'Every harvest dries and cures for about two weeks before it ships.') +
       stage('05', 'Your hand', String(shopsWk || '—'), w0 && w0.thisWeek ? 'shops this week' : 'shops next drop', 'The Finder shows which shops just got it. Drops emails you when your strain lands.', lk('Where.dc.html', 'Open the Finder')) +
       '</div>';
-    V.__RB_H_ROTTITLE__ = esc(!rot.length ? 'Harvesting soon' : rotWk === nxt ? 'Harvesting next week' : 'Harvesting week of ' + fmt(rotWk));
-    V.__RB_H_ROTSUB__ = esc(rot.length ? 'Coming out of the flower rooms the week of ' + fmt(rotWk) + '.' : 'Check the Strains page for harvest dates.');
+    V.__RB_H_ROTTITLE__ = 'Harvesting next';   // the line under it names the week
+    V.__RB_H_ROTSUB__ = esc(rot.length ? 'Coming out of the flower rooms the week of ' + fmt(rotWk) + ' to ' + fmt(plus(rotWk, 6)) + '.' : 'Check the Strains page for harvest dates.');
     V.__RB_H_SEEALL__ = esc('See all ' + lineup.length + ' →');
     V.__RB_H_BETA__ = beta.slice(0, 4).map(function (b) { return tree(betaCard(b), b.name); }).join('');   // Nov 5: home Beta tiles open the family tree
 
